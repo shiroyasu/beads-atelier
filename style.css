@@ -59,3 +59,26 @@ body{font-size:16px}.brand small,.eyebrow{font-size:12px}.sub,.swatch strong,sum
 /* Keep stitch mode next to the pattern title, with wrapping on narrow screens. */
 .project{flex-wrap:wrap;gap:12px 24px}.project>div:first-child{flex:1 1 320px;min-width:0}.project #title{width:100%;max-width:560px}.project .stitch-toggle{padding:0;margin-left:auto;justify-content:flex-end;max-width:100%}.project .stitch-toggle button{white-space:normal}
 @media(max-width:800px){.project>div:first-child{flex-basis:100%}.project .stitch-toggle{margin-left:0;justify-content:flex-start}}
+
+/* Two columns: dedicate the remaining width and screen height to the diagram. */
+main{grid-template-columns:220px minmax(0,1fr);align-items:start;padding-bottom:24px}
+@media(min-width:1500px){main{grid-template-columns:245px minmax(0,1fr)}}
+@media(min-width:651px) and (max-width:1100px){main{grid-template-columns:185px minmax(0,1fr)}}
+.canvasWrap{padding:12px 12px 8px}
+.canvasLabel{margin-bottom:10px}
+.canvasFoot{margin-top:8px}
+#scroller{height:max(220px,calc(100dvh - var(--canvas-top,280px) - 72px));min-height:0}
+.diagram-info{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:4px 16px;background:#fff;border:1px solid var(--line);border-top:0;padding:7px 12px;min-width:0}
+.diagram-info .beadinfo{display:flex;align-items:center;flex-wrap:wrap;gap:4px 10px;min-width:0;min-height:0;background:none;padding:0;text-align:left;flex:1 1 280px}
+.diagram-info .bigbead{width:20px;height:24px;border-radius:5px;margin:0;flex-shrink:0}
+.diagram-info .inspected-name{font-size:13px;overflow-wrap:anywhere;min-width:0}
+.diagram-info strong{font-size:13px;overflow-wrap:anywhere}
+.diagram-info a{display:inline;margin:0;font-size:13px;white-space:nowrap}
+#selectionText{font-size:12px;color:var(--muted)}
+.used-beads{margin-top:16px;padding:12px 16px;background:#fff;border:1px solid var(--line);border-radius:8px}
+.used-beads summary{font-size:14px}
+.used-beads #total{margin-left:12px;color:var(--muted);font-size:13px}
+.used-beads #used{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:0 24px}
+.used-beads .usedrow{min-width:0}
+.used-beads .usedrow b{overflow-wrap:anywhere}
+@media(max-width:650px){#scroller{height:60dvh;min-height:220px}.diagram-info{padding:8px}.canvasWrap{padding:10px 8px}}

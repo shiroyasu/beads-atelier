@@ -55,7 +55,18 @@ function removeColor(id){
   changed(p.code+'を削除しました。「元に戻す」で復元できます');
   inspect(Math.min(focusCell.c,cols-1),Math.min(focusCell.r,rows-1));
 }
-function inspect(c,r){focusCell={c,r};let p=bead(cells[r][c]);$('coord').textContent=`${r+1}段・${c+1}列　${p?.code||'未配置'}`;let box=$('inspected');box.replaceChildren();let chip=document.createElement('span');chip.className='bigbead';if(p)styleChip(chip,p);else chip.style.background='#fff';let strong=document.createElement('strong');strong.textContent=p?.code||'未配置';let desc=document.createElement('p');desc.textContent=p?.name||'まだビーズが置かれていません';let pos=document.createElement('p');pos.textContent=`${r+1}段 / ${c+1}列`;box.append(chip,strong,desc,pos);const info=document.createElement('p');info.textContent=p?(catalogRecord(p)?'実在品番 / 写真由来の近似色':'自由色 / 品番未確認'):'';box.append(info);const b=catalogRecord(p);if(b){let link=document.createElement('a');link.href=b.product_url;link.target='_blank';link.rel='noopener';link.textContent='商品ページで確認 ↗';box.append(link)}}
+function inspect(c,r){
+ focusCell={c,r};const p=bead(cells[r][c]);
+ $('coord').textContent=`${r+1}段・${c+1}列`;
+ const box=$('inspected');box.replaceChildren();
+ const chip=document.createElement('span');chip.className='bigbead';chip.setAttribute('aria-hidden','true');
+ if(p)styleChip(chip,p);else chip.style.background='#fff';
+ const strong=document.createElement('strong');strong.textContent=p?.code||'未配置';
+ const desc=document.createElement('span');desc.className='inspected-name';desc.textContent=p?.name||'まだビーズが置かれていません';
+ box.append(chip,strong,desc);
+ const b=catalogRecord(p);if(b){const link=document.createElement('a');link.href=b.product_url;link.target='_blank';link.rel='noopener';link.textContent='商品ページ ↗';box.append(link)}
+}
+
 function hit(e){let svg=$('grid'),pt=svg.createSVGPoint();pt.x=e.clientX;pt.y=e.clientY;pt=pt.matrixTransform($('patternView').getScreenCTM().inverse());let r=Math.floor((pt.y-20)/26),c=Math.floor((pt.x-20-rowOffset(r))/22);return r>=0&&r<rows&&c>=0&&c<cols?{c,r}:null}
 function setTool(t){tool=t;$('paste').textContent='貼り付け';$('paste').classList.toggle('primary',t==='paste');document.querySelectorAll('[data-tool]').forEach(b=>{b.classList.toggle('active',b.dataset.tool===t);b.setAttribute('aria-pressed',b.dataset.tool===t)});$('hint').textContent={paint:'ドラッグで連続して描けます。選択ツールで、模様をまとめて編集。',erase:'ドラッグでビーズを消します。元に戻すこともできます。',select:'ドラッグで範囲選択。コピーしたら「貼り付け」を押し、貼り付け先をクリック。',move:'選択範囲の中からドラッグして移動。矢印キーでも1目ずつ動かせます。',inspect:'ビーズをタップして、品番・色名・位置を確認します。',paste:'貼り付け先の左上のビーズをクリック。Escでキャンセル。'}[t]}
 function copy(){if(!selection)return;let s=selection;clipboard=cells.slice(s.r1,s.r2+1).map(row=>row.slice(s.c1,s.c2+1));render();status('コピーしました。「貼り付け」を押して、図案上の貼り付け先をクリックしてください')}
@@ -110,3 +121,15 @@ $('switchSave').onclick=()=>finishStitch(true);$('switchDiscard').onclick=()=>fi
 $('paletteSort').onchange=()=>{render();$('swatches').scrollTop=0};
 
 $('paletteFlat').onchange=$('paletteTexture').onchange=()=>render();
+
+// Fit the canvas to the available screen height without resizing it on page scroll.
+function fitCanvasHeight(){
+ const top=$('scroller').getBoundingClientRect().top+window.scrollY;
+ $('scroller').style.setProperty('--canvas-top',Math.ceil(top)+'px');
+}
+window.addEventListener('resize',fitCanvasHeight);
+if(typeof ResizeObserver!=='undefined'){
+ const canvasLayoutObserver=new ResizeObserver(fitCanvasHeight);
+ for(const node of document.querySelectorAll('header,.project,.editor-controls'))canvasLayoutObserver.observe(node);
+}
+requestAnimationFrame(fitCanvasHeight);
