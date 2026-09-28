@@ -67,7 +67,7 @@ main{grid-template-columns:220px minmax(0,1fr);align-items:start;padding-bottom:
 .canvasWrap{padding:12px 12px 8px}
 .canvasLabel{margin-bottom:10px}
 .canvasFoot{margin-top:8px}
-#scroller{height:max(220px,calc(100dvh - var(--canvas-top,280px) - 72px));min-height:0}
+#scroller{height:max(286px,calc((100dvh - var(--canvas-top,280px) - 72px) * 1.3));min-height:0}
 .diagram-info{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:4px 16px;background:#fff;border:1px solid var(--line);border-top:0;padding:7px 12px;min-width:0}
 .diagram-info .beadinfo{display:flex;align-items:center;flex-wrap:wrap;gap:4px 10px;min-width:0;min-height:0;background:none;padding:0;text-align:left;flex:1 1 280px}
 .diagram-info .bigbead{width:20px;height:24px;border-radius:5px;margin:0;flex-shrink:0}
@@ -81,4 +81,4 @@ main{grid-template-columns:220px minmax(0,1fr);align-items:start;padding-bottom:
 .used-beads #used{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:0 24px}
 .used-beads .usedrow{min-width:0}
 .used-beads .usedrow b{overflow-wrap:anywhere}
-@media(max-width:650px){#scroller{height:60dvh;min-height:220px}.diagram-info{padding:8px}.canvasWrap{padding:10px 8px}}
+@media(max-width:650px){#scroller{height:78dvh;min-height:286px}.diagram-info{padding:8px}.canvasWrap{padding:10px 8px}}
