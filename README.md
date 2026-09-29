@@ -4,7 +4,9 @@
 
 ## 使い方
 
-[使い方マニュアル（PDF・全4ページ）](manual.pdf)
+[使い方マニュアル（Web版）](manual.html)
+
+[以前のPDF版（旧画面・参考用）](manual.pdf)
 
 ## できること
 
