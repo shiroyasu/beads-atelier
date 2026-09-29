@@ -6,7 +6,7 @@
 
 [使い方マニュアル（Web版）](manual.html)
 
-[以前のPDF版（旧画面・参考用）](manual.pdf)
+[PDF版使い方ガイド](manual.pdf)
 
 ## できること
 
